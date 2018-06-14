@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './components/App';
+import Root from './screens/Root';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root')); // eslint-disable-line react/jsx-filename-extension
+ReactDOM.render(<Root />, document.getElementById('root')); // eslint-disable-line react/jsx-filename-extension
 registerServiceWorker();

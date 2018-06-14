@@ -1,7 +1,11 @@
-import { configure, addDecorator } from '@storybook/react';
+// @flow
+
 import React from 'react';
-import { theme } from '../src/theme';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider, injectGlobal } from 'styled-components';
+
+import { theme } from '../theme';
+import ScreensHome from './Home';
 
 // Global Styles
 injectGlobal`
@@ -30,12 +34,18 @@ body {
   --space4: 4.5rem;
   --space5: 7.2rem;
 }
+
 `;
 
-function loadStories() {
-  require('../src/stories');
-}
+const ScreensRoot = () => (
+  <ThemeProvider theme={theme}>
+    <Router>
+      <Switch>
+        <Route path="/" component={ScreensHome} />
+        <Route path="/edit" component={ScreensHome} />
+      </Switch>
+    </Router>
+  </ThemeProvider>
+);
 
-addDecorator(story => <ThemeProvider theme={theme}>{story()}</ThemeProvider>);
-
-configure(loadStories, module);
+export default ScreensRoot;
