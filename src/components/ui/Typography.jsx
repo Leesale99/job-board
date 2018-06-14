@@ -51,3 +51,7 @@ export const H5 = Heading.withComponent('h5').extend`
 export const H6 = Heading.withComponent('h6').extend`
   font-size: ${({ theme }) => theme.getFontSize('h6')};
 `;
+
+export const P = styled.p`
+  margin: var(--space1) 0 0;
+`;

@@ -30,8 +30,10 @@ const theme = {
     bgHover: '#333333',
     bgGray: '#787878',
     disabled: '#e6e6ea',
+    baseText: '#686868',
     headingText: '#303030',
-    placeholderText: '#55595c'
+    placeholderText: '#55595c',
+    borderColor: '#e6e6e6'
   },
   btn: {
     /**

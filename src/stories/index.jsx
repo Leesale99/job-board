@@ -1,10 +1,11 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 // import { linkTo } from '@storybook/addon-links';
 
-import { Button, H1, H2, H3, H4, H5, H6 } from '../components/ui';
+import { Button, H1, H2, H3, H4, H5, H6, Input } from '../components/ui';
 
 // import { Button, Welcome } from '@storybook/react/demo';
 
@@ -121,4 +122,15 @@ storiesOf('Typography', module).add('Headings', () => (
     <H5>Heading H5</H5>
     <H6>Heading H6</H6>
   </React.Fragment>
+));
+
+const InputWrapper = styled.div`
+  max-width: 40rem;
+  margin: 2rem;
+`;
+
+storiesOf('Form Elements', module).add('Input Text Field', () => (
+  <InputWrapper>
+    <Input placeholder="Text Field" />
+  </InputWrapper>
 ));

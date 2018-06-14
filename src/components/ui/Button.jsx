@@ -20,7 +20,6 @@ const Button = styled.button`
     outline ? 'transparent' : theme.getColor(color)};
   color: ${({ color, outline, theme }: Props) =>
     outline ? theme.getColor(color) : theme.getColor('light')};
-  margin: 1em;
   padding: 0.916em 1.666em;
   font-size: ${({ size, theme }: Props) => theme.getBtnSize(size)};
   line-height: 1.625;

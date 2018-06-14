@@ -5,10 +5,9 @@ const Input = styled.input`
   line-height: 1.5;
   width: 100%;
   border-radius: 0;
-  color: #55595c;
+  color: ${({ theme }) => theme.getColor('placeholderText')};
   background: none;
-  box-shadow: none;
-  border: 1px solid #e6e6e6;
+  border: 1px solid ${({ theme }) => theme.getColor('borderColor')};
   font-weight: normal;
   padding: 1.2rem;
   font-size: 16px;

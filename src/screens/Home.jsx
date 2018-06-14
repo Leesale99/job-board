@@ -4,11 +4,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Button, H1, H2, H3, H4, H5, H6, Input } from '../components/ui';
 
-const Main = styled.main`
-  background: #f8f8f8;
-  height: 100%;
-`;
-
 const Wrapper = styled.div`
   display: grid;
   grid-template-areas: 'hero hero cta1' 'hero hero cta2';
@@ -36,7 +31,7 @@ const Cta = Item.extend`
 
 const ScreensHome = () => {
   return (
-    <Main>
+    <div>
       <Button color="warning" outline size="sm">
         Base Button
       </Button>
@@ -66,7 +61,7 @@ const ScreensHome = () => {
         <Cta item={1}>5</Cta>
         <Cta item={2}>6</Cta>
       </Wrapper>
-    </Main>
+    </div>
   );
 };
 
