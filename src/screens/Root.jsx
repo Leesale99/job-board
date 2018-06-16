@@ -8,6 +8,7 @@ import { theme } from '../theme';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import ScreensHome from './Home';
+import ScreensSearch from './Search';
 
 // Global Styles
 injectGlobal`
@@ -64,8 +65,8 @@ const ScreensRoot = () => (
         <Header />
         <Main className="main">
           <Switch>
-            <Route path="/" component={ScreensHome} />
-            <Route path="/edit" component={ScreensHome} />
+            <Route exact path="/" component={ScreensHome} />
+            <Route path="/search" component={ScreensSearch} />
           </Switch>
         </Main>
         <Footer />

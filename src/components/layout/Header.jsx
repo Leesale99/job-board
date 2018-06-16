@@ -21,7 +21,7 @@ const StyledHeader = styled.header`
     align-items: center;
     justify-content: center;
     color: ${({ theme }) => theme.getColor('primaryDark')};
-    font-size: 2.4rem;
+    font-size: 2.8rem;
     font-weight: 700;
     letter-spacing: -2px;
     

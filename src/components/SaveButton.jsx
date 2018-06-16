@@ -1,21 +1,26 @@
+// @flow
+
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import { ICONS } from '../constants';
 import { Icon } from './ui';
 
-// const SaveIcon = styled(Icon)`
-//   &:hover {
-//     fill: ${({ theme }) => theme.getColor('primaryDark')};
-//   }
-// `;
+type S = {
+  isSaved: boolean
+};
 
-class SaveButton extends Component {
+type P = {
+  isSaved: boolean
+};
+
+class SaveButton extends Component<S, P> {
   state = {
-    isSaved: false
+    isSaved: this.props.isSaved
   };
 
-  _onClick = () => {
+  _onClick = (e: SyntheticEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     this.setState(prevState => ({ isSaved: !prevState.isSaved }));
   };
 
@@ -25,6 +30,7 @@ class SaveButton extends Component {
       border: none;
       padding: 0;
       outline: none;
+      cursor: pointer;
 
       &:focus,
       &:active {
@@ -41,7 +47,8 @@ class SaveButton extends Component {
 
       &:hover {
         & > svg {
-          fill: ${({ theme }) => theme.getColor('primaryDark')};
+          fill: ${({ theme }: { theme: { getColor: string => string } }) =>
+            theme.getColor('primaryDark')};
         }
       }
     `;
