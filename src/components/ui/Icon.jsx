@@ -13,13 +13,11 @@ const Icon = ({
   color?: string
 }) => {
   const StyledIcon = styled.svg`
-    fill: ${({
-      theme
-    }: {
+    fill: ${(props: {
       theme: {
         getColor: (?string) => string
       }
-    }) => theme.getColor(color)};
+    }) => props.theme.getColor(color)};
     width: ${size}px;
     height: ${size}px;
   `;
