@@ -1,2 +1,2 @@
 export { default as theme } from './theme';
-export { default as media } from './breakPoints';
+export { default as media } from './media';

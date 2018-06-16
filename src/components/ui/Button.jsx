@@ -7,6 +7,7 @@ type Props = {
   size: string,
   shape: string,
   outline: boolean,
+  disabled: boolean,
   theme: {
     getColor: string => string,
     getFontSize: string => string,
@@ -42,7 +43,16 @@ const Button = styled.button`
       outline ? theme.getColor(color) : theme.getColor('bgHover')};
   }
 
-  ${({ disabled, theme }) =>
+  &:focus,
+  &:active {
+    outline: none;
+  }
+
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
+  ${({ disabled, theme }: Props) =>
     disabled &&
     css`
       background: ${theme.getColor('disabled')};

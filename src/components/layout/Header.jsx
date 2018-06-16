@@ -1,17 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import SearchBar from '../layout/SearchBar';
 
-const StyledHeader = styled.div`
+const StyledHeader = styled.header`
   ${'' /* position: fixed;
   top: 0;
-  width: 100%; */} height: 6rem;
+  width: 100%; */}
   background: ${({ theme }) => theme.getColor('light')};
   display: grid;
   grid-template-columns: auto 1fr;
   grid-template-rows: 1fr;
-  ${'' /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.08); */}
-  border: 1px solid ${({ theme }) => theme.getColor('borderColor')}
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
   z-index: 10;
   grid-area: header;
 
@@ -20,6 +20,14 @@ const StyledHeader = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    color: ${({ theme }) => theme.getColor('primaryDark')};
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: -2px;
+    
+    span {
+      color: ${({ theme }) => theme.getColor('primary')};
+    }
   }
 
   .main-nav {
@@ -35,7 +43,7 @@ const StyledHeader = styled.div`
     &__item {
       display: flex;
       align-items: center;
-      padding: 10px;
+      padding: 2rem;
 
       & > * {
         text-decoration: none;
@@ -46,8 +54,10 @@ const StyledHeader = styled.div`
 `;
 
 const Header = () => (
-  <StyledHeader>
-    <div className="logo">Logo text</div>
+  <StyledHeader className="header">
+    <div className="logo">
+      Jobs<span>Board</span>
+    </div>
     <nav className="main-nav">
       <ul className="main-nav__navigation">
         <li className="main-nav__item">
@@ -67,6 +77,7 @@ const Header = () => (
         </li>
       </ul>
     </nav>
+    <SearchBar />
   </StyledHeader>
 );
 

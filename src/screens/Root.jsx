@@ -7,7 +7,6 @@ import styled, { ThemeProvider, injectGlobal } from 'styled-components';
 import { theme } from '../theme';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
-import SearchBar from '../components/layout/SearchBar';
 import ScreensHome from './Home';
 
 // Global Styles
@@ -45,25 +44,25 @@ const Container = styled.div`
   display: grid;
   grid-template-areas:
     'header header header'
-    'search-bar search-bar search-bar'
     '.      main   .'
     'footer footer footer';
+  grid-template-columns: 1fr 114rem 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-row-gap: 2rem;
 `;
 
 const Main = styled.main`
-  margin: 6rem auto 0;
   grid-area: main;
-  max-width: 114rem;
   width: 100%;
+  height: calc(100vh - 22.1rem);
 `;
 
 const ScreensRoot = () => (
   <ThemeProvider theme={theme}>
     <Router>
-      <Container>
+      <Container className="container">
         <Header />
-        <SearchBar />
-        <Main>
+        <Main className="main">
           <Switch>
             <Route path="/" component={ScreensHome} />
             <Route path="/edit" component={ScreensHome} />

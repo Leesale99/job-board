@@ -5,9 +5,10 @@ import { Input, Button } from '../ui';
 
 const SearchBarWrapper = styled.div`
   padding: 1.5rem;
-  grid-area: search-bar;
   background: #fff;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
+  grid-area: search-bar;
+  grid-column: 1 / -1;
+  border-top: 1px solid ${({ theme }) => theme.getColor('borderColor')};
 `;
 
 const StyledSearchBar = styled.div`
