@@ -19,7 +19,9 @@ const JobsData = [
     createdAt: '12 days ago',
     name: 'Catena Media',
     location: 'Sliema',
-    isSaved: false
+    isSaved: false,
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam congue elit sit amet elementum congue. Proin cursus nec ipsum ac auctor. Sed a dui gravida, gravida ipsum in, vehicula urna. Suspendisse aliquam lorem at tellus tristique, nec efficitur velit facilisis. Sed quis lectus id mauris fringilla commodo. Ut aliquet orci sed nisl volutpat, non tristique turpis sollicitudin. Etiam ut pretium felis. Sed rhoncus orci faucibus, commodo lectus a, facilisis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam ac felis augue. Maecenas a lectus massa. Nam pulvinar tristique facilisis. Cras lacus ante, suscipit eget rutrum in, ullamcorper non augue. Ut ac libero ac ligula lacinia finibus a vel sem. Sed eleifend euismod nisi, nec porttitor sem tincidunt at.'
   },
   {
     id: '2',
@@ -28,7 +30,9 @@ const JobsData = [
     createdAt: '12 days ago',
     name: 'Catena Media',
     location: 'Sliema',
-    isSaved: true
+    isSaved: true,
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam congue elit sit amet elementum congue. Proin cursus nec ipsum ac auctor. Sed a dui gravida, gravida ipsum in, vehicula urna. Suspendisse aliquam lorem at tellus tristique, nec efficitur velit facilisis. Sed quis lectus id mauris fringilla commodo. Ut aliquet orci sed nisl volutpat, non tristique turpis sollicitudin. Etiam ut pretium felis. Sed rhoncus orci faucibus, commodo lectus a, facilisis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam ac felis augue. Maecenas a lectus massa. Nam pulvinar tristique facilisis. Cras lacus ante, suscipit eget rutrum in, ullamcorper non augue. Ut ac libero ac ligula lacinia finibus a vel sem. Sed eleifend euismod nisi, nec porttitor sem tincidunt at.'
   },
   {
     id: '3',
@@ -37,7 +41,9 @@ const JobsData = [
     createdAt: '12 days ago',
     name: 'Catena Media',
     location: 'Sliema',
-    isSaved: true
+    isSaved: true,
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam congue elit sit amet elementum congue. Proin cursus nec ipsum ac auctor. Sed a dui gravida, gravida ipsum in, vehicula urna. Suspendisse aliquam lorem at tellus tristique, nec efficitur velit facilisis. Sed quis lectus id mauris fringilla commodo. Ut aliquet orci sed nisl volutpat, non tristique turpis sollicitudin. Etiam ut pretium felis. Sed rhoncus orci faucibus, commodo lectus a, facilisis ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam ac felis augue. Maecenas a lectus massa. Nam pulvinar tristique facilisis. Cras lacus ante, suscipit eget rutrum in, ullamcorper non augue. Ut ac libero ac ligula lacinia finibus a vel sem. Sed eleifend euismod nisi, nec porttitor sem tincidunt at.'
   }
 ];
 
@@ -86,16 +92,16 @@ const StyledSearchPanel = styled.div`
 `;
 
 type S = {
-  activeCard: string
+  activeResultId: string
 };
 
 class SearchPanel extends Component<{}, S> {
   state = {
-    activeCard: ''
+    activeResultId: ''
   };
 
   componentWillMount() {
-    this.setState({ activeCard: JobsData[0].id });
+    this.setState({ activeResultId: JobsData[0].id });
   }
 
   handleResultCardAction = (
@@ -106,7 +112,7 @@ class SearchPanel extends Component<{}, S> {
     event.stopPropagation();
 
     if (event.keyCode === 13 || event.type === 'click') {
-      this.setState({ activeCard: id });
+      this.setState({ activeResultId: id });
       return;
     }
   };
@@ -135,7 +141,7 @@ class SearchPanel extends Component<{}, S> {
                     date={createdAt}
                     name={name}
                     location={location}
-                    isActive={this.state.activeCard === id}
+                    isActive={this.state.activeResultId === id}
                     isSaved={isSaved}
                     onResultCardClick={(
                       e: | SyntheticEvent<HTMLLIElement>
@@ -152,7 +158,7 @@ class SearchPanel extends Component<{}, S> {
           </ul>
         </div>
         <div className="search-panel__main">
-          <ResultDetails />
+          <ResultDetails resultId={this.state.activeResultId} />
         </div>
       </StyledSearchPanel>
     );

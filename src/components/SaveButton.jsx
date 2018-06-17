@@ -6,6 +6,8 @@ import styled from 'styled-components';
 import { ICONS } from '../constants';
 import { Icon } from './ui';
 
+type StyledProps = { theme: { getColor: string => string } }; // eslint-disable-line react/no-unused-prop-types
+
 type S = {
   isSaved: boolean
 };
@@ -14,7 +16,7 @@ type P = {
   isSaved: boolean
 };
 
-class SaveButton extends Component<S, P> {
+class SaveButton extends Component<P, S> {
   state = {
     isSaved: this.props.isSaved
   };
@@ -47,8 +49,7 @@ class SaveButton extends Component<S, P> {
 
       &:hover {
         & > svg {
-          fill: ${({ theme }: { theme: { getColor: string => string } }) =>
-            theme.getColor('primaryDark')};
+          fill: ${(props: StyledProps) => props.theme.getColor('primaryDark')};
         }
       }
     `;
