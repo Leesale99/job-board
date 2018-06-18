@@ -1,0 +1,34 @@
+type User {
+  id: ID! @unique
+  name: String!
+  posts: [Post!]!
+  company: Company
+  saved_jobs: [Job!]!
+}
+
+type Post {
+  id: ID! @unique
+  title: String!
+  content: String!
+  published: Boolean! @default(value: "false")
+  author: User
+}
+
+type Company {
+  id: ID! @unique
+  name: String!
+  location: String!
+  industry: String!
+  description: String!
+  jobs: [Job!]!
+  published: Boolean! @default(value: "false")
+  author: User
+}
+
+type Job {
+  id: ID! @unique
+  title: String!
+  description: String!
+  published: Boolean! @default(value: "false")
+  company: Company!
+}

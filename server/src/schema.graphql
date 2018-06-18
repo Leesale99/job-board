@@ -1,0 +1,30 @@
+# import Post from './generated/prisma.graphql'
+# import User from './generated/prisma.graphql'
+# import Company from './generated/prisma.graphql'
+# import Job from './generated/prisma.graphql'
+
+type Query {
+  # posts(searchString: String): [Post!]!
+  companies(searchString: String): [Company!]!
+  jobs(searchString: String): [Job!]!
+  user(id: ID!): User
+}
+
+type Mutation {
+  # createDraft(authorId: ID!, title: String!, content: String!): Post
+  createCompanyDraft(
+    authorId: ID
+    name: String!
+    location: String!
+    industry: String!
+    description: String!
+  ): Company
+  createJobDraft(companyId: ID!, title: String, description: String!): Job
+  publishCompany(id: ID!): Company
+  publishJob(id: ID!): Job
+  # publish(id: ID!): Post
+  # deletePost(id: ID!): Post
+  deleteCompany(id: ID!): Company
+  deleteJob(id: ID!): Job
+  # signup(name: String!): User!
+}
