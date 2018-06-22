@@ -24,6 +24,7 @@ const StyledHeader = styled.header`
     font-size: 2.8rem;
     font-weight: 700;
     letter-spacing: -2px;
+    text-decoration: none;
     
     span {
       color: ${({ theme }) => theme.getColor('primary')};
@@ -55,25 +56,22 @@ const StyledHeader = styled.header`
 
 const Header = () => (
   <StyledHeader className="header">
-    <div className="logo">
+    <Link to="/" className="logo">
       Jobs<span>Board</span>
-    </div>
+    </Link>
     <nav className="main-nav">
       <ul className="main-nav__navigation">
         <li className="main-nav__item">
-          <Link to="/">Home</Link>
+          <Link to="/jobs">Jobs</Link>
         </li>
         <li className="main-nav__item">
-          <Link to="/">Home</Link>
+          <Link to="/companies">Companies</Link>
         </li>
         <li className="main-nav__item">
-          <Link to="/">Home</Link>
+          <Link to="/signup">Sign Up</Link>
         </li>
         <li className="main-nav__item">
-          <Link to="/">Home</Link>
-        </li>
-        <li className="main-nav__item">
-          <Link to="/">Home</Link>
+          <Link to="/login">Log In</Link>
         </li>
       </ul>
     </nav>

@@ -1,14 +1,13 @@
 // @flow
 
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import styled, { ThemeProvider, injectGlobal } from 'styled-components';
+import { Route, Switch } from 'react-router-dom';
+import styled, { injectGlobal } from 'styled-components';
 
-import { theme } from '../theme';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import ScreensHome from './Home';
-import ScreensSearch from './Search';
+import ScreensJobs from './Jobs';
 
 // Global Styles
 injectGlobal`
@@ -59,20 +58,17 @@ const Main = styled.main`
 `;
 
 const ScreensRoot = () => (
-  <ThemeProvider theme={theme}>
-    <Router>
-      <Container className="container">
-        <Header />
-        <Main className="main">
-          <Switch>
-            <Route exact path="/" component={ScreensHome} />
-            <Route path="/search" component={ScreensSearch} />
-          </Switch>
-        </Main>
-        <Footer />
-      </Container>
-    </Router>
-  </ThemeProvider>
+  <Container className="container">
+    <Header />
+    <Main className="main">
+      <Switch>
+        <Route exact path="/" component={ScreensHome} />
+        <Route path="/jobs" component={ScreensJobs} />
+        {/* <Route path="/companies" component={ScreensCompanies} /> */}
+      </Switch>
+    </Main>
+    <Footer />
+  </Container>
 );
 
 export default ScreensRoot;

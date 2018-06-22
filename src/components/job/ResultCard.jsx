@@ -4,41 +4,35 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { H3 } from '../ui';
 import SaveButton from '../SaveButton';
+import { flattenData } from '../../helpers';
 
-type StyledProps = {
-  theme: {
-    getColor: string => string,
-    getFontSize: string => string
-  }
-};
+import logoTipico from '../../images/logo-tipico.png';
 
 type P = {
-  img: string,
-  title: string,
-  date: string,
-  name: string,
-  location: string,
+  data: Job,
   isActive: boolean,
   isSaved: boolean,
   onResultCardClick: (
     e: SyntheticEvent<HTMLLIElement> | SyntheticKeyboardEvent<HTMLLIElement>
-  ) => void,
-  onResultCardKeyDown: (
-    e: SyntheticEvent<HTMLLIElement> | SyntheticKeyboardEvent<HTMLLIElement>
   ) => void
 };
 
+const withNormalData = WrappedComponent =>
+  function WithNormalData(props: P) {
+    const dataValues = flattenData(props.data);
+
+    WithNormalData.displayName = `WithNormalData(SearchResult)`;
+    return <WrappedComponent {...props} data={dataValues} />;
+  };
+
 const SearchResult = ({
-  img,
-  title,
-  date,
-  name,
-  location,
+  data,
   isActive,
-  isSaved,
-  onResultCardClick,
-  onResultCardKeyDown
+  isSaved = false,
+  onResultCardClick
 }: P) => {
+  const [id, title, name, location, indicator] = data;
+
   const StyledResult = styled.li`
     .result {
       padding: 1.5rem;
@@ -47,7 +41,7 @@ const SearchResult = ({
       display: flex;
       align-items: center;
       border-bottom: 1px solid
-        ${({ theme }: StyledProps) => theme.getColor('borderColor')};
+        ${(props: { theme: Theme }) => props.theme.getColor('borderColor')};
 
       ${isActive &&
         css`
@@ -59,8 +53,8 @@ const SearchResult = ({
             bottom: 0;
             height: 100%;
             width: 0.4rem;
-            background: ${({ theme }: StyledProps) =>
-              theme.getColor('primary')};
+            background: ${(props: { theme: Theme }) =>
+              props.theme.getColor('primary')};
           }
         `};
 
@@ -74,7 +68,8 @@ const SearchResult = ({
         padding-left: 1.5rem;
 
         h3 {
-          font-size: ${(props: StyledProps) => props.theme.getFontSize('h6')};
+          font-size: ${(props: { theme: Theme }) =>
+            props.theme.getFontSize('h6')};
         }
 
         .date {
@@ -118,13 +113,13 @@ const SearchResult = ({
         tabIndex={0}
         className="result"
         onClick={onResultCardClick}
-        onKeyDown={onResultCardKeyDown}
+        onKeyDown={onResultCardClick}
       >
-        <img src={img} alt="result" className="result__img" />
+        <img src={logoTipico} alt="result" className="result__img" />
         <div className="result__caption">
           <div className="result__title">
             <H3>{title}</H3>
-            <span className="date">{date}</span>
+            <span className="date">12 days ago</span>
           </div>
           <div className="result__info">
             <p>
@@ -140,4 +135,4 @@ const SearchResult = ({
   );
 };
 
-export default SearchResult;
+export default withNormalData(SearchResult);

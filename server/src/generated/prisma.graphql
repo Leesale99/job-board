@@ -1,15 +1,11 @@
 # source: https://eu1.prisma.sh/aleksandar-radovanovic-6bca7c/jobs-board/dev
-# timestamp: Mon Jun 18 2018 17:51:31 GMT+0200 (CEST)
+# timestamp: Fri Jun 22 2018 22:40:26 GMT+0200 (CEST)
 
 type AggregateCompany {
   count: Int!
 }
 
 type AggregateJob {
-  count: Int!
-}
-
-type AggregatePost {
   count: Int!
 }
 
@@ -26,11 +22,11 @@ type Company implements Node {
   id: ID!
   name: String!
   location: String!
-  industry: String!
   description: String
+  industry: String!
   jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job!]
   published: Boolean!
-  author(where: UserWhereInput): User
+  owner(where: UserWhereInput): User
 }
 
 """A connection to a list of items."""
@@ -46,16 +42,11 @@ type CompanyConnection {
 input CompanyCreateInput {
   name: String!
   location: String!
-  industry: String!
   description: String
+  industry: String!
   published: Boolean
   jobs: JobCreateManyWithoutCompanyInput
-  author: UserCreateOneWithoutCompanyInput
-}
-
-input CompanyCreateOneWithoutAuthorInput {
-  create: CompanyCreateWithoutAuthorInput
-  connect: CompanyWhereUniqueInput
+  owner: UserCreateOneInput
 }
 
 input CompanyCreateOneWithoutJobsInput {
@@ -63,22 +54,13 @@ input CompanyCreateOneWithoutJobsInput {
   connect: CompanyWhereUniqueInput
 }
 
-input CompanyCreateWithoutAuthorInput {
-  name: String!
-  location: String!
-  industry: String!
-  description: String
-  published: Boolean
-  jobs: JobCreateManyWithoutCompanyInput
-}
-
 input CompanyCreateWithoutJobsInput {
   name: String!
   location: String!
-  industry: String!
   description: String
+  industry: String!
   published: Boolean
-  author: UserCreateOneWithoutCompanyInput
+  owner: UserCreateOneInput
 }
 
 """An edge in a connection."""
@@ -97,10 +79,10 @@ enum CompanyOrderByInput {
   name_DESC
   location_ASC
   location_DESC
-  industry_ASC
-  industry_DESC
   description_ASC
   description_DESC
+  industry_ASC
+  industry_DESC
   published_ASC
   published_DESC
   updatedAt_ASC
@@ -113,8 +95,8 @@ type CompanyPreviousValues {
   id: ID!
   name: String!
   location: String!
-  industry: String!
   description: String
+  industry: String!
   published: Boolean!
 }
 
@@ -160,20 +142,11 @@ input CompanySubscriptionWhereInput {
 input CompanyUpdateInput {
   name: String
   location: String
-  industry: String
   description: String
+  industry: String
   published: Boolean
   jobs: JobUpdateManyWithoutCompanyInput
-  author: UserUpdateOneWithoutCompanyInput
-}
-
-input CompanyUpdateOneWithoutAuthorInput {
-  create: CompanyCreateWithoutAuthorInput
-  connect: CompanyWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: CompanyUpdateWithoutAuthorDataInput
-  upsert: CompanyUpsertWithoutAuthorInput
+  owner: UserUpdateOneInput
 }
 
 input CompanyUpdateOneWithoutJobsInput {
@@ -184,27 +157,13 @@ input CompanyUpdateOneWithoutJobsInput {
   upsert: CompanyUpsertWithoutJobsInput
 }
 
-input CompanyUpdateWithoutAuthorDataInput {
-  name: String
-  location: String
-  industry: String
-  description: String
-  published: Boolean
-  jobs: JobUpdateManyWithoutCompanyInput
-}
-
 input CompanyUpdateWithoutJobsDataInput {
   name: String
   location: String
-  industry: String
   description: String
+  industry: String
   published: Boolean
-  author: UserUpdateOneWithoutCompanyInput
-}
-
-input CompanyUpsertWithoutAuthorInput {
-  update: CompanyUpdateWithoutAuthorDataInput!
-  create: CompanyCreateWithoutAuthorInput!
+  owner: UserUpdateOneInput
 }
 
 input CompanyUpsertWithoutJobsInput {
@@ -341,46 +300,6 @@ input CompanyWhereInput {
 
   """All values not ending with the given string."""
   location_not_ends_with: String
-  industry: String
-
-  """All values that are not equal to given value."""
-  industry_not: String
-
-  """All values that are contained in given list."""
-  industry_in: [String!]
-
-  """All values that are not contained in given list."""
-  industry_not_in: [String!]
-
-  """All values less than the given value."""
-  industry_lt: String
-
-  """All values less than or equal the given value."""
-  industry_lte: String
-
-  """All values greater than the given value."""
-  industry_gt: String
-
-  """All values greater than or equal the given value."""
-  industry_gte: String
-
-  """All values containing the given string."""
-  industry_contains: String
-
-  """All values not containing the given string."""
-  industry_not_contains: String
-
-  """All values starting with the given string."""
-  industry_starts_with: String
-
-  """All values not starting with the given string."""
-  industry_not_starts_with: String
-
-  """All values ending with the given string."""
-  industry_ends_with: String
-
-  """All values not ending with the given string."""
-  industry_not_ends_with: String
   description: String
 
   """All values that are not equal to given value."""
@@ -421,6 +340,46 @@ input CompanyWhereInput {
 
   """All values not ending with the given string."""
   description_not_ends_with: String
+  industry: String
+
+  """All values that are not equal to given value."""
+  industry_not: String
+
+  """All values that are contained in given list."""
+  industry_in: [String!]
+
+  """All values that are not contained in given list."""
+  industry_not_in: [String!]
+
+  """All values less than the given value."""
+  industry_lt: String
+
+  """All values less than or equal the given value."""
+  industry_lte: String
+
+  """All values greater than the given value."""
+  industry_gt: String
+
+  """All values greater than or equal the given value."""
+  industry_gte: String
+
+  """All values containing the given string."""
+  industry_contains: String
+
+  """All values not containing the given string."""
+  industry_not_contains: String
+
+  """All values starting with the given string."""
+  industry_starts_with: String
+
+  """All values not starting with the given string."""
+  industry_not_starts_with: String
+
+  """All values ending with the given string."""
+  industry_ends_with: String
+
+  """All values not ending with the given string."""
+  industry_not_ends_with: String
   published: Boolean
 
   """All values that are not equal to given value."""
@@ -428,17 +387,20 @@ input CompanyWhereInput {
   jobs_every: JobWhereInput
   jobs_some: JobWhereInput
   jobs_none: JobWhereInput
-  author: UserWhereInput
+  owner: UserWhereInput
 }
 
 input CompanyWhereUniqueInput {
   id: ID
 }
 
+scalar DateTime
+
 type Job implements Node {
   id: ID!
   title: String!
   description: String!
+  createdAt: DateTime!
   published: Boolean!
   company(where: CompanyWhereInput): Company!
 }
@@ -458,11 +420,6 @@ input JobCreateInput {
   description: String!
   published: Boolean
   company: CompanyCreateOneWithoutJobsInput!
-}
-
-input JobCreateManyInput {
-  create: [JobCreateInput!]
-  connect: [JobWhereUniqueInput!]
 }
 
 input JobCreateManyWithoutCompanyInput {
@@ -492,18 +449,19 @@ enum JobOrderByInput {
   title_DESC
   description_ASC
   description_DESC
+  createdAt_ASC
+  createdAt_DESC
   published_ASC
   published_DESC
   updatedAt_ASC
   updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
 }
 
 type JobPreviousValues {
   id: ID!
   title: String!
   description: String!
+  createdAt: DateTime!
   published: Boolean!
 }
 
@@ -546,27 +504,11 @@ input JobSubscriptionWhereInput {
   node: JobWhereInput
 }
 
-input JobUpdateDataInput {
-  title: String
-  description: String
-  published: Boolean
-  company: CompanyUpdateOneWithoutJobsInput
-}
-
 input JobUpdateInput {
   title: String
   description: String
   published: Boolean
   company: CompanyUpdateOneWithoutJobsInput
-}
-
-input JobUpdateManyInput {
-  create: [JobCreateInput!]
-  connect: [JobWhereUniqueInput!]
-  disconnect: [JobWhereUniqueInput!]
-  delete: [JobWhereUniqueInput!]
-  update: [JobUpdateWithWhereUniqueNestedInput!]
-  upsert: [JobUpsertWithWhereUniqueNestedInput!]
 }
 
 input JobUpdateManyWithoutCompanyInput {
@@ -584,20 +526,9 @@ input JobUpdateWithoutCompanyDataInput {
   published: Boolean
 }
 
-input JobUpdateWithWhereUniqueNestedInput {
-  where: JobWhereUniqueInput!
-  data: JobUpdateDataInput!
-}
-
 input JobUpdateWithWhereUniqueWithoutCompanyInput {
   where: JobWhereUniqueInput!
   data: JobUpdateWithoutCompanyDataInput!
-}
-
-input JobUpsertWithWhereUniqueNestedInput {
-  where: JobWhereUniqueInput!
-  update: JobUpdateDataInput!
-  create: JobCreateInput!
 }
 
 input JobUpsertWithWhereUniqueWithoutCompanyInput {
@@ -735,6 +666,28 @@ input JobWhereInput {
 
   """All values not ending with the given string."""
   description_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
   published: Boolean
 
   """All values that are not equal to given value."""
@@ -753,30 +706,24 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createUser(data: UserCreateInput!): User!
-  createPost(data: PostCreateInput!): Post!
-  createCompany(data: CompanyCreateInput!): Company!
   createJob(data: JobCreateInput!): Job!
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
-  updateCompany(data: CompanyUpdateInput!, where: CompanyWhereUniqueInput!): Company
+  createCompany(data: CompanyCreateInput!): Company!
+  createUser(data: UserCreateInput!): User!
   updateJob(data: JobUpdateInput!, where: JobWhereUniqueInput!): Job
-  deleteUser(where: UserWhereUniqueInput!): User
-  deletePost(where: PostWhereUniqueInput!): Post
-  deleteCompany(where: CompanyWhereUniqueInput!): Company
+  updateCompany(data: CompanyUpdateInput!, where: CompanyWhereUniqueInput!): Company
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   deleteJob(where: JobWhereUniqueInput!): Job
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
-  upsertCompany(where: CompanyWhereUniqueInput!, create: CompanyCreateInput!, update: CompanyUpdateInput!): Company!
+  deleteCompany(where: CompanyWhereUniqueInput!): Company
+  deleteUser(where: UserWhereUniqueInput!): User
   upsertJob(where: JobWhereUniqueInput!, create: JobCreateInput!, update: JobUpdateInput!): Job!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
-  updateManyPosts(data: PostUpdateInput!, where: PostWhereInput): BatchPayload!
-  updateManyCompanies(data: CompanyUpdateInput!, where: CompanyWhereInput): BatchPayload!
+  upsertCompany(where: CompanyWhereUniqueInput!, create: CompanyCreateInput!, update: CompanyUpdateInput!): Company!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   updateManyJobs(data: JobUpdateInput!, where: JobWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
-  deleteManyPosts(where: PostWhereInput): BatchPayload!
-  deleteManyCompanies(where: CompanyWhereInput): BatchPayload!
+  updateManyCompanies(data: CompanyUpdateInput!, where: CompanyWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   deleteManyJobs(where: JobWhereInput): BatchPayload!
+  deleteManyCompanies(where: CompanyWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -806,298 +753,16 @@ type PageInfo {
   endCursor: String
 }
 
-type Post implements Node {
-  id: ID!
-  title: String!
-  content: String!
-  published: Boolean!
-  author(where: UserWhereInput): User
-}
-
-"""A connection to a list of items."""
-type PostConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [PostEdge]!
-  aggregate: AggregatePost!
-}
-
-input PostCreateInput {
-  title: String!
-  content: String!
-  published: Boolean
-  author: UserCreateOneWithoutPostsInput
-}
-
-input PostCreateManyWithoutAuthorInput {
-  create: [PostCreateWithoutAuthorInput!]
-  connect: [PostWhereUniqueInput!]
-}
-
-input PostCreateWithoutAuthorInput {
-  title: String!
-  content: String!
-  published: Boolean
-}
-
-"""An edge in a connection."""
-type PostEdge {
-  """The item at the end of the edge."""
-  node: Post!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum PostOrderByInput {
-  id_ASC
-  id_DESC
-  title_ASC
-  title_DESC
-  content_ASC
-  content_DESC
-  published_ASC
-  published_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type PostPreviousValues {
-  id: ID!
-  title: String!
-  content: String!
-  published: Boolean!
-}
-
-type PostSubscriptionPayload {
-  mutation: MutationType!
-  node: Post
-  updatedFields: [String!]
-  previousValues: PostPreviousValues
-}
-
-input PostSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [PostSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [PostSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [PostSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: PostWhereInput
-}
-
-input PostUpdateInput {
-  title: String
-  content: String
-  published: Boolean
-  author: UserUpdateOneWithoutPostsInput
-}
-
-input PostUpdateManyWithoutAuthorInput {
-  create: [PostCreateWithoutAuthorInput!]
-  connect: [PostWhereUniqueInput!]
-  disconnect: [PostWhereUniqueInput!]
-  delete: [PostWhereUniqueInput!]
-  update: [PostUpdateWithWhereUniqueWithoutAuthorInput!]
-  upsert: [PostUpsertWithWhereUniqueWithoutAuthorInput!]
-}
-
-input PostUpdateWithoutAuthorDataInput {
-  title: String
-  content: String
-  published: Boolean
-}
-
-input PostUpdateWithWhereUniqueWithoutAuthorInput {
-  where: PostWhereUniqueInput!
-  data: PostUpdateWithoutAuthorDataInput!
-}
-
-input PostUpsertWithWhereUniqueWithoutAuthorInput {
-  where: PostWhereUniqueInput!
-  update: PostUpdateWithoutAuthorDataInput!
-  create: PostCreateWithoutAuthorInput!
-}
-
-input PostWhereInput {
-  """Logical AND on all given filters."""
-  AND: [PostWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [PostWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [PostWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  title: String
-
-  """All values that are not equal to given value."""
-  title_not: String
-
-  """All values that are contained in given list."""
-  title_in: [String!]
-
-  """All values that are not contained in given list."""
-  title_not_in: [String!]
-
-  """All values less than the given value."""
-  title_lt: String
-
-  """All values less than or equal the given value."""
-  title_lte: String
-
-  """All values greater than the given value."""
-  title_gt: String
-
-  """All values greater than or equal the given value."""
-  title_gte: String
-
-  """All values containing the given string."""
-  title_contains: String
-
-  """All values not containing the given string."""
-  title_not_contains: String
-
-  """All values starting with the given string."""
-  title_starts_with: String
-
-  """All values not starting with the given string."""
-  title_not_starts_with: String
-
-  """All values ending with the given string."""
-  title_ends_with: String
-
-  """All values not ending with the given string."""
-  title_not_ends_with: String
-  content: String
-
-  """All values that are not equal to given value."""
-  content_not: String
-
-  """All values that are contained in given list."""
-  content_in: [String!]
-
-  """All values that are not contained in given list."""
-  content_not_in: [String!]
-
-  """All values less than the given value."""
-  content_lt: String
-
-  """All values less than or equal the given value."""
-  content_lte: String
-
-  """All values greater than the given value."""
-  content_gt: String
-
-  """All values greater than or equal the given value."""
-  content_gte: String
-
-  """All values containing the given string."""
-  content_contains: String
-
-  """All values not containing the given string."""
-  content_not_contains: String
-
-  """All values starting with the given string."""
-  content_starts_with: String
-
-  """All values not starting with the given string."""
-  content_not_starts_with: String
-
-  """All values ending with the given string."""
-  content_ends_with: String
-
-  """All values not ending with the given string."""
-  content_not_ends_with: String
-  published: Boolean
-
-  """All values that are not equal to given value."""
-  published_not: Boolean
-  author: UserWhereInput
-}
-
-input PostWhereUniqueInput {
-  id: ID
-}
-
 type Query {
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
-  companies(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Company]!
   jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job]!
-  user(where: UserWhereUniqueInput!): User
-  post(where: PostWhereUniqueInput!): Post
-  company(where: CompanyWhereUniqueInput!): Company
+  companies(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Company]!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   job(where: JobWhereUniqueInput!): Job
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
-  companiesConnection(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CompanyConnection!
+  company(where: CompanyWhereUniqueInput!): Company
+  user(where: UserWhereUniqueInput!): User
   jobsConnection(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): JobConnection!
+  companiesConnection(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CompanyConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -1107,18 +772,18 @@ type Query {
 }
 
 type Subscription {
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
-  post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
-  company(where: CompanySubscriptionWhereInput): CompanySubscriptionPayload
   job(where: JobSubscriptionWhereInput): JobSubscriptionPayload
+  company(where: CompanySubscriptionWhereInput): CompanySubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
 type User implements Node {
   id: ID!
   name: String!
-  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
-  company(where: CompanyWhereInput): Company
-  saved_jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job!]
+  email: String
+  password: String!
+  image: String
+  role: UserRole!
 }
 
 """A connection to a list of items."""
@@ -1133,31 +798,15 @@ type UserConnection {
 
 input UserCreateInput {
   name: String!
-  posts: PostCreateManyWithoutAuthorInput
-  company: CompanyCreateOneWithoutAuthorInput
-  saved_jobs: JobCreateManyInput
+  email: String
+  password: String!
+  image: String
+  role: UserRole!
 }
 
-input UserCreateOneWithoutCompanyInput {
-  create: UserCreateWithoutCompanyInput
+input UserCreateOneInput {
+  create: UserCreateInput
   connect: UserWhereUniqueInput
-}
-
-input UserCreateOneWithoutPostsInput {
-  create: UserCreateWithoutPostsInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateWithoutCompanyInput {
-  name: String!
-  posts: PostCreateManyWithoutAuthorInput
-  saved_jobs: JobCreateManyInput
-}
-
-input UserCreateWithoutPostsInput {
-  name: String!
-  company: CompanyCreateOneWithoutAuthorInput
-  saved_jobs: JobCreateManyInput
 }
 
 """An edge in a connection."""
@@ -1174,6 +823,14 @@ enum UserOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  email_ASC
+  email_DESC
+  password_ASC
+  password_DESC
+  image_ASC
+  image_DESC
+  role_ASC
+  role_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -1183,6 +840,15 @@ enum UserOrderByInput {
 type UserPreviousValues {
   id: ID!
   name: String!
+  email: String
+  password: String!
+  image: String
+  role: UserRole!
+}
+
+enum UserRole {
+  EMPLOYER
+  CANDIDATE
 }
 
 type UserSubscriptionPayload {
@@ -1224,51 +890,34 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
+input UserUpdateDataInput {
+  name: String
+  email: String
+  password: String
+  image: String
+  role: UserRole
+}
+
 input UserUpdateInput {
   name: String
-  posts: PostUpdateManyWithoutAuthorInput
-  company: CompanyUpdateOneWithoutAuthorInput
-  saved_jobs: JobUpdateManyInput
+  email: String
+  password: String
+  image: String
+  role: UserRole
 }
 
-input UserUpdateOneWithoutCompanyInput {
-  create: UserCreateWithoutCompanyInput
+input UserUpdateOneInput {
+  create: UserCreateInput
   connect: UserWhereUniqueInput
   disconnect: Boolean
   delete: Boolean
-  update: UserUpdateWithoutCompanyDataInput
-  upsert: UserUpsertWithoutCompanyInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
 }
 
-input UserUpdateOneWithoutPostsInput {
-  create: UserCreateWithoutPostsInput
-  connect: UserWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: UserUpdateWithoutPostsDataInput
-  upsert: UserUpsertWithoutPostsInput
-}
-
-input UserUpdateWithoutCompanyDataInput {
-  name: String
-  posts: PostUpdateManyWithoutAuthorInput
-  saved_jobs: JobUpdateManyInput
-}
-
-input UserUpdateWithoutPostsDataInput {
-  name: String
-  company: CompanyUpdateOneWithoutAuthorInput
-  saved_jobs: JobUpdateManyInput
-}
-
-input UserUpsertWithoutCompanyInput {
-  update: UserUpdateWithoutCompanyDataInput!
-  create: UserCreateWithoutCompanyInput!
-}
-
-input UserUpsertWithoutPostsInput {
-  update: UserUpdateWithoutPostsDataInput!
-  create: UserCreateWithoutPostsInput!
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserWhereInput {
@@ -1360,15 +1009,142 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
-  posts_every: PostWhereInput
-  posts_some: PostWhereInput
-  posts_none: PostWhereInput
-  company: CompanyWhereInput
-  saved_jobs_every: JobWhereInput
-  saved_jobs_some: JobWhereInput
-  saved_jobs_none: JobWhereInput
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+  image: String
+
+  """All values that are not equal to given value."""
+  image_not: String
+
+  """All values that are contained in given list."""
+  image_in: [String!]
+
+  """All values that are not contained in given list."""
+  image_not_in: [String!]
+
+  """All values less than the given value."""
+  image_lt: String
+
+  """All values less than or equal the given value."""
+  image_lte: String
+
+  """All values greater than the given value."""
+  image_gt: String
+
+  """All values greater than or equal the given value."""
+  image_gte: String
+
+  """All values containing the given string."""
+  image_contains: String
+
+  """All values not containing the given string."""
+  image_not_contains: String
+
+  """All values starting with the given string."""
+  image_starts_with: String
+
+  """All values not starting with the given string."""
+  image_not_starts_with: String
+
+  """All values ending with the given string."""
+  image_ends_with: String
+
+  """All values not ending with the given string."""
+  image_not_ends_with: String
+  role: UserRole
+
+  """All values that are not equal to given value."""
+  role_not: UserRole
+
+  """All values that are contained in given list."""
+  role_in: [UserRole!]
+
+  """All values that are not contained in given list."""
+  role_not_in: [UserRole!]
+  _MagicalBackRelation_CompanyToUser_every: CompanyWhereInput
+  _MagicalBackRelation_CompanyToUser_some: CompanyWhereInput
+  _MagicalBackRelation_CompanyToUser_none: CompanyWhereInput
 }
 
 input UserWhereUniqueInput {
   id: ID
+  email: String
 }

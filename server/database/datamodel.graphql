@@ -1,34 +1,56 @@
 type User {
   id: ID! @unique
   name: String!
-  posts: [Post!]!
-  company: Company
-  saved_jobs: [Job!]!
+  email: String @unique
+  password: String!
+  image: String
+  role: UserRole!
 }
 
-type Post {
+# type Employer implements User {
+#   id: ID! @unique
+#   name: String!
+#   email: String @unique
+#   birth_date: String!
+#   avatar: String
+#   role: UserRole!
+#   company: Company!
+#   saved_candidates: [Candidate!]!
+# }
+
+# type Candidate implements User {
+#   id: ID! @unique
+#   name: String!
+#   email: String @unique
+#   birth_date: String!
+#   avatar: String
+#   role: UserRole!
+#   saved_jobs: [Job!]!
+#   saved_companies: [Company!]!
+# }
+
+type Job {
   id: ID! @unique
   title: String!
-  content: String!
+  description: String!
+  createdAt: DateTime!
   published: Boolean! @default(value: "false")
-  author: User
+  company: Company!
+  company_owner: User
 }
 
 type Company {
   id: ID! @unique
   name: String!
   location: String!
+  description: String
   industry: String!
-  description: String!
   jobs: [Job!]!
   published: Boolean! @default(value: "false")
-  author: User
+  owner: User
 }
 
-type Job {
-  id: ID! @unique
-  title: String!
-  description: String!
-  published: Boolean! @default(value: "false")
-  company: Company!
+enum UserRole {
+  EMPLOYER
+  CANDIDATE
 }

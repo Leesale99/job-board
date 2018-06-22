@@ -1,17 +1,20 @@
+const { getUserId } = require('../../utils');
+
 const company = {
   createCompanyDraft: (parent, args, ctx, info) => {
+    const userId = getUserId(ctx);
     return ctx.db.mutation.createCompany(
       {
         data: {
           name: args.name,
           location: args.location,
           industry: args.industry,
-          description: args.description
-          // author: {
-          //   connect: {
-          //     id: args.authorId
-          //   }
-          // }
+          description: args.description,
+          owner: {
+            connect: {
+              id: userId
+            }
+          }
         }
       },
       info

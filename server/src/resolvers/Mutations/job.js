@@ -1,5 +1,8 @@
+const { getUserId } = require('../../utils');
+
 const job = {
   createJobDraft: (parent, args, ctx, info) => {
+    const userId = getUserId(ctx);
     return ctx.db.mutation.createJob(
       {
         data: {
@@ -8,6 +11,11 @@ const job = {
           company: {
             connect: {
               id: args.companyId
+            }
+          },
+          company_owner: {
+            connect: {
+              id: userId
             }
           }
         }
