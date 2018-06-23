@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import SearchBar from '../layout/SearchBar';
+
+const AUTH_TOKEN = 'auth-token';
 
 const StyledHeader = styled.header`
   ${'' /* position: fixed;
@@ -54,29 +57,42 @@ const StyledHeader = styled.header`
   }
 `;
 
-const Header = () => (
-  <StyledHeader className="header">
-    <Link to="/" className="logo">
-      Jobs<span>Board</span>
-    </Link>
-    <nav className="main-nav">
-      <ul className="main-nav__navigation">
-        <li className="main-nav__item">
-          <Link to="/jobs">Jobs</Link>
-        </li>
-        <li className="main-nav__item">
-          <Link to="/companies">Companies</Link>
-        </li>
-        <li className="main-nav__item">
-          <Link to="/signup">Sign Up</Link>
-        </li>
-        <li className="main-nav__item">
-          <Link to="/login">Log In</Link>
-        </li>
-      </ul>
-    </nav>
-    <SearchBar />
-  </StyledHeader>
-);
+const Header = props => {
+  const authToken = localStorage.getItem(AUTH_TOKEN);
+  return (
+    <StyledHeader className="header">
+      <Link to="/" className="logo">
+        Jobs<span>Board</span>
+      </Link>
+      <nav className="main-nav">
+        <ul className="main-nav__navigation">
+          <li className="main-nav__item">
+            <Link to="/jobs">Jobs</Link>
+          </li>
+          <li className="main-nav__item">
+            <Link to="/companies">Companies</Link>
+          </li>
+          {authToken ? (
+            <li className="main-nav__item">
+              <button
+                onClick={() => {
+                  localStorage.removeItem(AUTH_TOKEN);
+                  props.history.push('/');
+                }}
+              >
+                logout
+              </button>
+            </li>
+          ) : (
+            <li className="main-nav__item">
+              <Link to="/login">login</Link>
+            </li>
+          )}
+        </ul>
+      </nav>
+      <SearchBar />
+    </StyledHeader>
+  );
+};
 
-export default Header;
+export default withRouter(Header);

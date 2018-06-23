@@ -8,6 +8,7 @@ import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import ScreensHome from './Home';
 import ScreensJobs from './Jobs';
+import ScreensLogin from './Login';
 
 // Global Styles
 injectGlobal`
@@ -63,6 +64,7 @@ const ScreensRoot = () => (
     <Main className="main">
       <Switch>
         <Route exact path="/" component={ScreensHome} />
+        <Route path="/login" component={ScreensLogin} />
         <Route path="/jobs" component={ScreensJobs} />
         {/* <Route path="/companies" component={ScreensCompanies} /> */}
       </Switch>
