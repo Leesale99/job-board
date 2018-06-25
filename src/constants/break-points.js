@@ -1,7 +1,8 @@
 const BREAK_POINTS = {
-  lg: 992,
-  md: 768,
-  sm: 376
+  xl: 1199,
+  lg: 991,
+  md: 767,
+  sm: 575
 };
 
 export default BREAK_POINTS;

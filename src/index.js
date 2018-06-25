@@ -10,7 +10,7 @@ import Root from './screens/Root';
 import registerServiceWorker from './registerServiceWorker';
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000'
+  uri: process.env.GRAPHQL_API_ENDPOINT
 });
 
 const App = () => (

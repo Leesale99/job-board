@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import styled, { css } from 'styled-components';
 import { H3 } from '../ui';
 import SaveButton from '../SaveButton';
@@ -9,7 +9,15 @@ import { flattenData } from '../../helpers';
 import logoTipico from '../../images/logo-tipico.png';
 
 type P = {
-  data: Job,
+  data: { [string]: mixed },
+  isActive: boolean,
+  isSaved: boolean,
+  onResultCardClick: (
+    e: SyntheticEvent<HTMLLIElement> | SyntheticKeyboardEvent<HTMLLIElement>
+  ) => void
+};
+type NewProps = {
+  data: Array<string>,
   isActive: boolean,
   isSaved: boolean,
   onResultCardClick: (
@@ -17,7 +25,9 @@ type P = {
   ) => void
 };
 
-const withNormalData = WrappedComponent =>
+const withNormalData = (
+  WrappedComponent: React.ComponentType<any>
+): React.ComponentType<any> =>
   function WithNormalData(props: P) {
     const dataValues = flattenData(props.data);
 
@@ -30,7 +40,7 @@ const SearchResult = ({
   isActive,
   isSaved = false,
   onResultCardClick
-}: P) => {
+}: NewProps) => {
   const [id, title, name, location, indicator] = data;
 
   const StyledResult = styled.li`

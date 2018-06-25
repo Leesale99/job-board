@@ -4,6 +4,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import styled, { injectGlobal } from 'styled-components';
 
+import { media } from '../theme';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import ScreensHome from './Home';
@@ -50,6 +51,10 @@ const Container = styled.div`
   grid-template-columns: 1fr 114rem 1fr;
   grid-template-rows: auto 1fr auto;
   grid-row-gap: 2rem;
+
+  ${media.xl`
+    grid-template-columns: 1.5rem 1fr 1.5rem;
+  `};
 `;
 
 const Main = styled.main`

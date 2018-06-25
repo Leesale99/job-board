@@ -1,7 +1,10 @@
+// @flow
+
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
+import type { RouterHistory } from 'react-router-dom';
 import SearchBar from '../layout/SearchBar';
 
 const AUTH_TOKEN = 'auth-token';
@@ -10,7 +13,7 @@ const StyledHeader = styled.header`
   ${'' /* position: fixed;
   top: 0;
   width: 100%; */}
-  background: ${({ theme }) => theme.getColor('light')};
+  background: ${(props: { theme: Theme }) => props.theme.getColor('light')};
   display: grid;
   grid-template-columns: auto 1fr;
   grid-template-rows: 1fr;
@@ -19,18 +22,18 @@ const StyledHeader = styled.header`
   grid-area: header;
 
   .logo {
-    min-width: 200px;
+    min-width: 16rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: ${({ theme }) => theme.getColor('primaryDark')};
+    color: ${(props: { theme: Theme }) => props.theme.getColor('primaryDark')};
     font-size: 2.8rem;
     font-weight: 700;
     letter-spacing: -2px;
     text-decoration: none;
     
     span {
-      color: ${({ theme }) => theme.getColor('primary')};
+      color: ${(props: { theme: Theme }) => props.theme.getColor('primary')};
     }
   }
 
@@ -51,13 +54,13 @@ const StyledHeader = styled.header`
 
       & > * {
         text-decoration: none;
-        color: ${({ theme }) => theme.getColor('baseText')};
+        color: ${(props: { theme: Theme }) => props.theme.getColor('baseText')};
       }
     }
   }
 `;
 
-const Header = props => {
+const Header = (props: { history: RouterHistory }) => {
   const authToken = localStorage.getItem(AUTH_TOKEN);
   return (
     <StyledHeader className="header">

@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
+import type { RouterHistory } from 'react-router-dom';
 import { H3 } from '../components/ui';
 
 const AUTH_TOKEN = 'auth-token';
@@ -28,7 +29,13 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-type P = {};
+type SignupProps = ({
+  variables: { name: string, role: string, email: string, password: string }
+}) => { data: { signup: { token: string } } };
+
+type LoginProps = ({
+  variables: { email: string, password: string }
+}) => { data: { login: { token: string } } };
 
 type S = {
   login: boolean,
@@ -38,7 +45,7 @@ type S = {
   role: string
 };
 
-class Login extends Component<P, S> {
+class Login extends Component<{ history: RouterHistory }, S> {
   state = {
     login: true,
     email: '',
@@ -47,7 +54,7 @@ class Login extends Component<P, S> {
     role: 'CANDIDATE'
   };
 
-  handleLogin = async loginMutation => {
+  handleLogin = async (loginMutation: LoginProps) => {
     const { email, password } = this.state;
 
     const result = await loginMutation({
@@ -58,11 +65,10 @@ class Login extends Component<P, S> {
     });
     const { token } = result.data.login;
     this.saveUserData(token);
-
     this.props.history.push('/');
   };
 
-  handleSignup = async signupMutation => {
+  handleSignup = async (signupMutation: SignupProps) => {
     const { name, role, email, password } = this.state;
 
     const result = await signupMutation({
@@ -88,7 +94,9 @@ class Login extends Component<P, S> {
         {!this.state.login && (
           <input
             value={this.state.name}
-            onChange={e => this.setState({ name: e.target.value })}
+            onChange={(e: SyntheticEvent<HTMLInputElement>) =>
+              this.setState({ name: e.currentTarget.value })
+            }
             type="text"
             placeholder="Your Name"
           />
@@ -96,7 +104,9 @@ class Login extends Component<P, S> {
         {!this.state.login && (
           <select
             value={this.state.role}
-            onChange={e => this.setState({ role: e.target.value })}
+            onChange={(e: SyntheticEvent<HTMLSelectElement>) =>
+              this.setState({ role: e.currentTarget.value })
+            }
           >
             <option value="CANDIDATE">Candidate</option>
             <option value="EMPLOYER">Employer</option>
@@ -104,19 +114,23 @@ class Login extends Component<P, S> {
         )}
         <input
           value={this.state.email}
-          onChange={e => this.setState({ email: e.target.value })}
+          onChange={(e: SyntheticEvent<HTMLInputElement>) =>
+            this.setState({ email: e.currentTarget.value })
+          }
           type="email"
           placeholder="Your Email"
         />
         <input
           value={this.state.password}
-          onChange={e => this.setState({ password: e.target.value })}
+          onChange={(e: SyntheticEvent<HTMLInputElement>) =>
+            this.setState({ password: e.currentTarget.value })
+          }
           type="password"
           placeholder="Your Password"
         />
         {this.state.login ? (
           <Mutation mutation={LOGIN_MUTATION}>
-            {loginMutation => (
+            {(loginMutation: LoginProps) => (
               <button onClick={() => this.handleLogin(loginMutation)}>
                 login
               </button>
@@ -124,7 +138,7 @@ class Login extends Component<P, S> {
           </Mutation>
         ) : (
           <Mutation mutation={SIGNUP_MUTATION}>
-            {signupMutation => (
+            {(signupMutation: SignupProps) => (
               <button onClick={() => this.handleSignup(signupMutation)}>
                 create account
               </button>
