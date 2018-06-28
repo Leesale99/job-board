@@ -5,12 +5,18 @@ import { ApolloProvider } from 'react-apollo';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './theme';
+import { defaults, resolvers } from './graphql';
 
 import Root from './screens/Root';
 import registerServiceWorker from './registerServiceWorker';
 
 const client = new ApolloClient({
-  uri: process.env.GRAPHQL_API_ENDPOINT
+  uri: process.env.REACT_APP_GRAPHQL_API_ENDPOINT,
+  clientState: {
+    defaults,
+    resolvers
+    // typeDefs
+  }
 });
 
 const App = () => (

@@ -6,8 +6,7 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import type { RouterHistory } from 'react-router-dom';
 import SearchBar from '../layout/SearchBar';
-
-const AUTH_TOKEN = 'auth-token';
+import { AUTH_TOKEN } from '../../constants';
 
 const StyledHeader = styled.header`
   ${'' /* position: fixed;

@@ -4,7 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Input } from '../ui';
-import ResultList from './ResultList';
+import SearchPanelSidebar from './PanelSidebar';
 import ResultDetails from './ResultDetails';
 
 const StyledSearchPanel = styled.div`
@@ -58,11 +58,9 @@ const SearchPanel = () => (
         <Input small type="text" placeholder="Salary range" />
       </div>
     </header>
-    <div className="search-panel__sidebar">
-      <ResultList category="jobs" />
-    </div>
+    <SearchPanelSidebar category="jobs" />
     <div className="search-panel__main">
-      <ResultDetails resultId="1" />
+      <ResultDetails />
     </div>
   </StyledSearchPanel>
 );
