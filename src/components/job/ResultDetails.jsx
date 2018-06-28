@@ -3,23 +3,38 @@
 import React from 'react';
 import { Query } from 'react-apollo';
 import { H2 } from '../ui';
+import { GET_JOB } from '../../graphql';
 
-import { GET_ACTIVE_RESULT } from '../../graphql';
+const SearchResultDetails = (props: { resultId: string }) => {
+  return (
+    <Query query={GET_JOB} variables={{ id: props.resultId }}>
+      {({ loading, error, data }) => {
+        if (loading || !data.job) return 'Loading...';
+        if (error) return `Error! ${error.message}`;
 
-const ResultDetails = () => (
-  <Query query={GET_ACTIVE_RESULT}>
-    {({ data }) => {
-      const { id } = data.activeResult;
-      return (
-        <article className="details">
-          <header className="details__header">
-            <H2>{id}</H2>
-          </header>
-          <section>Content</section>
-        </article>
-      );
-    }}
-  </Query>
-);
+        const {
+          title,
+          description,
+          createdAt,
+          company: { name: companyName, location: companyLocation }
+        } = data.job;
 
-export default ResultDetails;
+        return (
+          <article className="details">
+            <header className="details__header">
+              <H2>{title}</H2>
+            </header>
+            <section>
+              <p>{description}</p>
+              <p>{createdAt}</p>
+              <p>{companyName}</p>
+              <p>{companyLocation}</p>
+            </section>
+          </article>
+        );
+      }}
+    </Query>
+  );
+};
+
+export default SearchResultDetails;

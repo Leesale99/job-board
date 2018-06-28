@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { Input } from '../ui';
 import SearchPanelSidebar from './PanelSidebar';
-import ResultDetails from './ResultDetails';
+import SearchPanelBody from './PanelBody';
 
 const StyledSearchPanel = styled.div`
   display: grid;
@@ -13,7 +13,7 @@ const StyledSearchPanel = styled.div`
   grid-template-rows: auto 1fr;
   grid-template-areas:
     'panel-header panel-header'
-    'panel-sidebar panel-main';
+    'panel-sidebar panel-body';
   background: #fff;
   height: 100%;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
@@ -29,8 +29,8 @@ const StyledSearchPanel = styled.div`
     overflow-y: scroll;
   }
 
-  .search-panel__main {
-    grid-area: panel-main;
+  .search-panel__body {
+    grid-area: panel-body;
   }
 
   .filter {
@@ -59,9 +59,7 @@ const SearchPanel = () => (
       </div>
     </header>
     <SearchPanelSidebar category="jobs" />
-    <div className="search-panel__main">
-      <ResultDetails />
-    </div>
+    <SearchPanelBody />
   </StyledSearchPanel>
 );
 
