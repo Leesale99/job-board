@@ -40,6 +40,16 @@ body {
   --space5: 7.2rem;
 }
 
+a {
+  color: #686868;
+}
+
+button {
+  background: transparent;
+  border: none;
+  padding: 0
+}
+
 `;
 
 const Container = styled.div`
@@ -57,23 +67,15 @@ const Container = styled.div`
   `};
 `;
 
-const Main = styled.main`
-  grid-area: main;
-  width: 100%;
-  height: calc(100vh - 22.1rem);
-`;
-
 const ScreensRoot = () => (
   <Container className="container">
     <Header />
-    <Main className="main">
-      <Switch>
-        <Route exact path="/" component={ScreensHome} />
-        <Route path="/login" component={ScreensLogin} />
-        <Route path="/jobs" component={ScreensJobs} />
-        {/* <Route path="/companies" component={ScreensCompanies} /> */}
-      </Switch>
-    </Main>
+    <Switch>
+      <Route exact path="/" component={ScreensHome} />
+      <Route path="/login" component={ScreensLogin} />
+      <Route path="/jobs" component={ScreensJobs} />
+      {/* <Route path="/companies" component={ScreensCompanies} /> */}
+    </Switch>
     <Footer />
   </Container>
 );

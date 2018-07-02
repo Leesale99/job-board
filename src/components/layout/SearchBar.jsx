@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import { media } from '../../theme';
 import { Input, Button } from '../ui';
 
 const SearchBarWrapper = styled.div`
@@ -17,14 +17,21 @@ const StyledSearchBar = styled.div`
   grid-column-gap: 1.5rem;
   max-width: 114rem;
   margin: 0 auto;
+
+  ${media.xl`
+    max-width: 100%;
+  `};
 `;
 
 const SearchBar = () => (
-  <SearchBarWrapper>
-    <StyledSearchBar>
-      <Input placeholder="Job Title, Keywords or Company" />
-      <Input placeholder="Jobs" />
-      <Input placeholder="Location" />
+  <SearchBarWrapper className="search-bar-wrapper">
+    <StyledSearchBar className="search-bar">
+      <Input
+        className="search-bar__input"
+        placeholder="Job Title, Keywords or Company"
+      />
+      <Input className="search-bar__input" placeholder="Jobs" />
+      <Input className="search-bar__input" placeholder="Location" />
       <Button>Search</Button>
     </StyledSearchBar>
   </SearchBarWrapper>

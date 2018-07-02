@@ -6,7 +6,7 @@ import { Mutation } from 'react-apollo';
 import { H3 } from '../ui';
 import SaveButton from '../SaveButton';
 import withNormalData from '../hoc/withNormalData';
-import logoTipico from '../../assets/images/logo-tipico.png';
+import logoLeoVegas from '../../assets/images/logo-leoVegas.png';
 import { SET_ACTIVE_RESULT } from '../../graphql';
 
 type P = {
@@ -96,23 +96,23 @@ const SearchResultTab = (props: P) => {
 
   return (
     <Mutation mutation={SET_ACTIVE_RESULT}>
-      {(setActiveResult: ({ variables: { id: string } }) => void) => {
+      {setActiveResult => {
         return (
           <StyledResult>
             <div
               role="button"
               tabIndex={0}
               className="result"
-              onClick={e => {
+              onClick={(e: SyntheticEvent<HTMLLIElement>) => {
                 setActiveResult({ variables: { id } });
                 props.onTabClick(e);
               }}
-              onKeyDown={e => {
+              onKeyDown={(e: SyntheticKeyboardEvent<HTMLLIElement>) => {
                 setActiveResult({ variables: { id } });
                 props.onTabClick(e);
               }}
             >
-              <img src={logoTipico} alt="result" className="result__img" />
+              <img src={logoLeoVegas} alt="result" className="result__img" />
               <div className="result__caption">
                 <div className="result__title">
                   <H3>{title}</H3>

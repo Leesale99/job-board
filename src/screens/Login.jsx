@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import type { RouterHistory } from 'react-router-dom';
+import Main from '../components/layout/Main';
 import { H3 } from '../components/ui';
 
 const AUTH_TOKEN = 'auth-token';
@@ -89,7 +90,7 @@ class Login extends Component<{ history: RouterHistory }, S> {
 
   render() {
     return (
-      <div>
+      <Main>
         <H3>{this.state.login ? 'Login' : 'Sign Up'}</H3>
         {!this.state.login && (
           <input
@@ -150,7 +151,7 @@ class Login extends Component<{ history: RouterHistory }, S> {
             ? 'need to create an account?'
             : 'already have an account?'}
         </button>
-      </div>
+      </Main>
     );
   }
 }

@@ -8,8 +8,8 @@ import { GET_JOB } from '../../graphql';
 const SearchResultDetails = (props: { resultId: string }) => {
   return (
     <Query query={GET_JOB} variables={{ id: props.resultId }}>
-      {({ loading, error, data }) => {
-        if (loading || !data.job) return 'Loading...';
+      {({ loading, error, data: { job } }) => {
+        if (loading || !job) return 'Loading...';
         if (error) return `Error! ${error.message}`;
 
         const {
@@ -17,7 +17,7 @@ const SearchResultDetails = (props: { resultId: string }) => {
           description,
           createdAt,
           company: { name: companyName, location: companyLocation }
-        } = data.job;
+        } = job;
 
         return (
           <article className="details">

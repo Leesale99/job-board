@@ -1,15 +1,29 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { media } from '../../theme';
 
 const Heading = styled.h1`
   font-weight: 400;
-  margin: var(--space1) 0 0;
-  color: ${({ theme }) => theme.getColor('headingText')};
+  margin: 0;
+  color: ${({ theme, color }) =>
+    color ? theme.getColor(color) : theme.getColor('headingText')};
   line-height: 1.38;
 `;
 
 export const H1 = Heading.extend`
   font-size: ${({ theme }) => theme.getFontSize('h1')};
+  ${props =>
+    props.introText &&
+    css`
+      font-size: 4.8rem;
+      text-align: center;
+      font-weight: 700;
+      letter-spacing: -2px;
+      text-transform: capitalize;
+
+      & > span {
+        color: ${props => props.theme.getColor('light')};
+      }
+    `};
 
   ${media.md`
     font-size: ${({ theme }) => theme.getFontSize('h2')} 

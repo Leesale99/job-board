@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/aleksandar-radovanovic-6bca7c/jobs-board/dev
-# timestamp: Fri Jun 22 2018 22:40:26 GMT+0200 (CEST)
+# timestamp: Mon Jul 02 2018 09:07:31 GMT+0200 (CEST)
 
 type AggregateCompany {
   count: Int!
@@ -403,6 +403,7 @@ type Job implements Node {
   createdAt: DateTime!
   published: Boolean!
   company(where: CompanyWhereInput): Company!
+  company_owner(where: UserWhereInput): User
 }
 
 """A connection to a list of items."""
@@ -420,6 +421,7 @@ input JobCreateInput {
   description: String!
   published: Boolean
   company: CompanyCreateOneWithoutJobsInput!
+  company_owner: UserCreateOneInput
 }
 
 input JobCreateManyWithoutCompanyInput {
@@ -431,6 +433,7 @@ input JobCreateWithoutCompanyInput {
   title: String!
   description: String!
   published: Boolean
+  company_owner: UserCreateOneInput
 }
 
 """An edge in a connection."""
@@ -509,6 +512,7 @@ input JobUpdateInput {
   description: String
   published: Boolean
   company: CompanyUpdateOneWithoutJobsInput
+  company_owner: UserUpdateOneInput
 }
 
 input JobUpdateManyWithoutCompanyInput {
@@ -524,6 +528,7 @@ input JobUpdateWithoutCompanyDataInput {
   title: String
   description: String
   published: Boolean
+  company_owner: UserUpdateOneInput
 }
 
 input JobUpdateWithWhereUniqueWithoutCompanyInput {
@@ -693,6 +698,7 @@ input JobWhereInput {
   """All values that are not equal to given value."""
   published_not: Boolean
   company: CompanyWhereInput
+  company_owner: UserWhereInput
 }
 
 input JobWhereUniqueInput {
@@ -1142,6 +1148,9 @@ input UserWhereInput {
   _MagicalBackRelation_CompanyToUser_every: CompanyWhereInput
   _MagicalBackRelation_CompanyToUser_some: CompanyWhereInput
   _MagicalBackRelation_CompanyToUser_none: CompanyWhereInput
+  _MagicalBackRelation_JobToUser_every: JobWhereInput
+  _MagicalBackRelation_JobToUser_some: JobWhereInput
+  _MagicalBackRelation_JobToUser_none: JobWhereInput
 }
 
 input UserWhereUniqueInput {

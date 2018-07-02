@@ -16,6 +16,7 @@ const StyledSearchPanel = styled.div`
     'panel-sidebar panel-body';
   background: #fff;
   height: 100%;
+  overflow: hidden;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
 
   .search-panel__header {

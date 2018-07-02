@@ -21,6 +21,7 @@ export const GET_JOB = gql`
       description
       createdAt
       company {
+        id
         name
         location
       }
